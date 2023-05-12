@@ -4,7 +4,9 @@ import tensorflow as tf
 
 from kaggle_datasets import KaggleDatasets
 
-class DataLoad(tf.data.TFRecordDataset): # tf.data.TFRecordDataset
+# Data pipelines and exploration functions based on notebook: https://www.kaggle.com/code/achinih/flower-classification-cnn-models
+
+class DataLoad(tf.data.TFRecordDataset):
     
     AUTO = tf.data.experimental.AUTOTUNE
     
