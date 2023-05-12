@@ -6,7 +6,7 @@ class DataVisualization():
     def __init__(self, data_load):
         self.data_load = data_load
 
-    def display_training_curves(training, validation, title, subplot):
+    def display_training_curves(self, training, validation, title, subplot):
         if subplot%10==1: 
             plt.subplots(figsize=(10,10), facecolor='#F0F0F0')
             plt.tight_layout()
@@ -20,7 +20,7 @@ class DataVisualization():
         ax.set_xlabel('epoch')
         ax.legend(['train', 'valid.'])
 
-    def batch_to_numpy_images_and_labels(data):
+    def batch_to_numpy_images_and_labels(self, data):
         images, labels = data
         numpy_images = images.numpy()
         numpy_labels = labels.numpy()
@@ -38,7 +38,7 @@ class DataVisualization():
         return "{} [{}{}{}]".format(self.data_load.CLASSES[label], 'OK' if correct else 'NO', u"\u2192" if not correct else '',
                                     self.data_load.CLASSES[correct_label] if not correct else ''), correct
 
-    def display_one_flower(image, title, subplot, red=False, titlesize=16):
+    def display_one_flower(self, image, title, subplot, red=False, titlesize=16):
         plt.subplot(*subplot)
         plt.axis('off')
         plt.imshow(image)
