@@ -100,12 +100,12 @@ class DataLoad(tf.data.TFRecordDataset):
     
     def get_training_dataset(self, data_augment=False, ordered=False):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
-        dataset = dataset.repeat(10)
-        if data_augment:
-            dataset = dataset.map(data_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
         dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
+        dataset = dataset.repeat(10)
+        if data_augment:
+            dataset = dataset.map(data_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
