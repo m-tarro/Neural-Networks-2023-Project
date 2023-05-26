@@ -98,7 +98,7 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
-    def get_training_dataset(self, data_augment=False, ordered=False):
+    def get_training_dataset(self, data_augment=False, cutmix=False, ordered=False):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
         if data_augment:
