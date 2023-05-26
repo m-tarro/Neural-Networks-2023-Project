@@ -106,6 +106,10 @@ class DataLoad(tf.data.TFRecordDataset):
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
         dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
+        if cutmix:
+            dataset = dataset.map(lambda x, _: tf.expand_dims(x, axis=0))
+            dataset = dataset.map(cutmix)
+            dataset = dataset.map(lambda x, _: tf.squeeze(x, axis=0))
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
