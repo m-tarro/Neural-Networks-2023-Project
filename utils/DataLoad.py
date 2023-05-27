@@ -114,7 +114,8 @@ class DataLoad(tf.data.TFRecordDataset):
         if data_augment and not cutmixup:
             dataset = dataset.map(data_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
-        dataset = dataset.shuffle(2048)
+        if not ordered:
+            dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
         if cutmixup:
             dataset.map(lambda x, y: self.CutMixUp([x, y], **kwargs), num_parallel_calls=self.AUTO)
