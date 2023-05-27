@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bokeh Plot</title>
+    <style>
+      html, body {
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body>
+    <div id="f0c6081d-8478-4322-b3d2-71a21e40ee09" data-root-id="p7206" style="display: contents;"></div>
+  
+    <script type="application/json" id="p7329">
+      {"58b8e454-f537-4254-a123-cfc89246bf0e":{"version":"3.1.1","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p7206","attributes":{"width":900,"x_range":{"type":"object","name":"FactorRange","id":"p7215","attributes":{"factors":["iris","wild rose","wild geranium","common dandelion","sunflower","rose","daisy","common tulip","morning glory","pink primrose","buttercup","spear thistle","windflower","yellow iris","petunia","water lily","wallflower","frangipani","cyclamen ","azalea","foxglove","hibiscus","lotus","snapdragon","bougainvillea","marigold","camellia","passion flower","columbine","thorn apple","magnolia","primula","artichoke","anthurium","sweet william","poinsettia","bee balm","carnation","wild pansy","gazania","clematis","bird of paradise","hippeastrum ","mallow","watercress","pincushion flower","black-eyed susan","tree poppy","daffodil","balloon flower","toad lily","king protea","monkshood","grape hyacinth","globe thistle","gaura","tiger lily","corn poppy","lenten rose","barberton daisy","geranium","sword lily","bishop of llandaff","pink-yellow dahlia","purple coneflower","cape flower","californian poppy","peruvian lily","fritillary","colt's foot","mexican petunia","canna lily","bromelia","stemless gentian","osteospermum","ruby-lipped cattleya","orange dahlia","lilac hibiscus","desert-rose","tree mallow","japanese anemone","trumpet creeper","silverbush","giant white arum lily","cautleya spicata","great masterwort","love in the mist","blanket flower","hard-leaved pocket orchid","blackberry lily","garden phlox","globe-flower","prince of wales feathers","spring crocus","pink quill","canterbury bells","bolero deep blue","cosmos","siam tulip","fire lily","moon orchid","sweet pea","alpine sea holly","red ginger"]}},"y_range":{"type":"object","name":"DataRange1d","id":"p7208","attributes":{"start":0}},"x_scale":{"type":"object","name":"CategoricalScale","id":"p7219"},"y_scale":{"type":"object","name":"LinearScale","id":"p7221"},"title":{"type":"object","name":"Title","id":"p7214","attributes":{"text":"Flower Frequencies","text_font_size":"14pt","align":"center"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p7245","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p7203","attributes":{"selected":{"type":"object","name":"Selection","id":"p7205","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p7204"},"data":{"type":"map","entries":[["flowers",["iris","wild rose","wild geranium","common dandelion","sunflower","rose","daisy","common tulip","morning glory","pink primrose","buttercup","spear thistle","windflower","yellow iris","petunia","water lily","wallflower","frangipani","cyclamen ","azalea","foxglove","hibiscus","lotus","snapdragon","bougainvillea","marigold","camellia","passion flower","columbine","thorn apple","magnolia","primula","artichoke","anthurium","sweet william","poinsettia","bee balm","carnation","wild pansy","gazania","clematis","bird of paradise","hippeastrum ","mallow","watercress","pincushion flower","black-eyed susan","tree poppy","daffodil","balloon flower","toad lily","king protea","monkshood","grape hyacinth","globe thistle","gaura","tiger lily","corn poppy","lenten rose","barberton daisy","geranium","sword lily","bishop of llandaff","pink-yellow dahlia","purple coneflower","cape flower","californian poppy","peruvian lily","fritillary","colt's foot","mexican petunia","canna lily","bromelia","stemless gentian","osteospermum","ruby-lipped cattleya","orange dahlia","lilac hibiscus","desert-rose","tree mallow","japanese anemone","trumpet creeper","silverbush","giant white arum lily","cautleya spicata","great masterwort","love in the mist","blanket flower","hard-leaved pocket orchid","blackberry lily","garden phlox","globe-flower","prince of wales feathers","spring crocus","pink quill","canterbury bells","bolero deep blue","cosmos","siam tulip","fire lily","moon orchid","sweet pea","alpine sea holly","red ginger"]],["frequencies",[796,743,713,566,470,462,420,390,308,271,259,257,255,233,197,168,168,147,145,143,138,137,136,135,133,125,124,123,123,120,120,119,116,115,110,110,108,107,106,105,103,103,102,101,98,95,95,95,92,91,90,89,89,86,85,84,83,80,71,65,63,61,58,57,55,54,51,50,50,47,42,42,35,35,35,34,34,33,31,31,30,29,29,27,27,26,25,25,24,23,23,22,22,21,21,21,20,20,19,18,17,17,16,15]]]}}},"view":{"type":"object","name":"CDSView","id":"p7246","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p7247"}}},"glyph":{"type":"object","name":"VBar","id":"p7242","attributes":{"x":{"type":"field","field":"flowers"},"width":{"type":"value","value":0.9},"top":{"type":"field","field":"frequencies"},"line_color":{"type":"value","value":"white"},"fill_color":{"type":"field","field":"frequencies","transform":{"type":"object","name":"LinearColorMapper","id":"p7202","attributes":{"palette":["#e5f5e0","#d6efc9","#c7e9b4","#b8e39f","#a9dd8a","#9ad775","#8bce60","#7cc94b","#6db336","#5ead21","#4fa40c","#409d0a","#319608","#238906","#147f04","#057802","#006d01","#005f01","#005101","#004301"],"low":15,"high":796}}},"fill_alpha":{"type":"value","value":0.8}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p7243","attributes":{"x":{"type":"field","field":"flowers"},"width":{"type":"value","value":0.9},"top":{"type":"field","field":"frequencies"},"line_color":{"type":"value","value":"white"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"field","field":"frequencies","transform":{"id":"p7202"}},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p7244","attributes":{"x":{"type":"field","field":"flowers"},"width":{"type":"value","value":0.9},"top":{"type":"field","field":"frequencies"},"line_color":{"type":"value","value":"white"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"field","field":"frequencies","transform":{"id":"p7202"}},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p7209","attributes":{"tools":[{"type":"object","name":"HoverTool","id":"p7236","attributes":{"renderers":"auto","tooltips":[["Flower","@flowers"],["Frequency","@frequencies"]],"mode":"vline"}}]}},"toolbar_location":null,"left":[{"type":"object","name":"LinearAxis","id":"p7229","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p7232","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p7230"},"axis_label":"Frequency","axis_label_text_font_size":"11pt","major_label_policy":{"type":"object","name":"AllLabels","id":"p7231"}}}],"below":[{"type":"object","name":"CategoricalAxis","id":"p7223","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"p7226"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"p7224"},"major_label_orientation":45,"major_label_policy":{"type":"object","name":"AllLabels","id":"p7225"}}}],"center":[{"type":"object","name":"Grid","id":"p7228","attributes":{"axis":{"id":"p7223"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p7235","attributes":{"dimension":1,"axis":{"id":"p7229"}}}]}}],"callbacks":{"type":"map"}}}
+    </script>
+    <script type="text/javascript">
+      (function() {
+        const fn = function() {
+          Bokeh.safely(function() {
+            (function(root) {
+              function embed_document(root) {
+              const docs_json = document.getElementById('p7329').textContent;
+              const render_items = [{"docid":"58b8e454-f537-4254-a123-cfc89246bf0e","roots":{"p7206":"f0c6081d-8478-4322-b3d2-71a21e40ee09"},"root_ids":["p7206"]}];
+              root.Bokeh.embed.embed_items(docs_json, render_items);
+              }
+              if (root.Bokeh !== undefined) {
+                embed_document(root);
+              } else {
+                let attempts = 0;
+                const timer = setInterval(function(root) {
+                  if (root.Bokeh !== undefined) {
+                    clearInterval(timer);
+                    embed_document(root);
+                  } else {
+                    attempts++;
+                    if (attempts > 100) {
+                      clearInterval(timer);
+                      console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                    }
+                  }
+                }, 10, root)
+              }
+            })(window);
+          });
+        };
+        if (document.readyState != "loading") fn();
+        else document.addEventListener("DOMContentLoaded", fn);
+      })();
+    </script>
+  </body>
+</html>
