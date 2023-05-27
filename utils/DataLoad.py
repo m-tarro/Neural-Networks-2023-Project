@@ -98,18 +98,25 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
-    def get_training_dataset(self, data_augment=False, cutmix=False, ordered=False):
+    def CutMixUp(batch_inputs, **kwargs):
+        bs_images = tf.cast(batch_inputs[0], dtype=tf.float32)
+        bs_labels = tf.cast(batch_inputs[1], dtype=tf.int32)
+
+        cutmixup = tfm.vision.augment.MixupAndCutmix(**kwargs)
+        cutmix_images, cutmix_labels = cutmixup.distort(images=bs_images, labels=bs_labels)
+
+        return [cutmix_images, cutmix_labels]
+    
+    def get_training_dataset(self, data_augment=False, mix_args=False, ordered=False):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
-        if data_augment:
+        if data_augment and not mix_args:
             dataset = dataset.map(data_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
         dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
-        if cutmix:
-            dataset = dataset.map(lambda x, _: tf.expand_dims(x, axis=0))
-            dataset = dataset.map(cutmix)
-            dataset = dataset.map(lambda x, _: tf.squeeze(x, axis=0))
+        if mix_args:
+            dataset.map(lambda x, y: self.CutMixUp([x, y], **mix_args), num_parallel_calls=self.AUTO)
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
