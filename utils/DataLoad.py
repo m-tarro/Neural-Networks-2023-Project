@@ -1,7 +1,7 @@
 import re
 import numpy as np
 import tensorflow as tf
-from tensorflow_models.vision.augment import MixupAndCutmix
+from tensorflow_models.vision import augment
 
 from kaggle_datasets import KaggleDatasets
 
@@ -103,7 +103,7 @@ class DataLoad(tf.data.TFRecordDataset):
         bs_images = tf.cast(batch_inputs[0], dtype=tf.float32)
         bs_labels = tf.cast(batch_inputs[1], dtype=tf.int32)
 
-        cutmixup = MixupAndCutmix(**kwargs)
+        cutmixup = augment.MixupAndCutmix(**kwargs)
         cutmix_images, cutmix_labels = cutmixup.distort(images=bs_images, labels=bs_labels)
 
         return [cutmix_images, cutmix_labels]
