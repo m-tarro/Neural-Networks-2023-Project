@@ -117,7 +117,7 @@ class DataLoad(tf.data.TFRecordDataset):
         dataset = dataset.prefetch(self.AUTO)
         return dataset
     
-    def get_test_dataset(self, ordered=False):
+    def get_test_dataset(self, ordered=True):
         dataset = self.load_dataset(self.TEST_FILENAMES, labeled=False, ordered=ordered)
         # dataset = dataset.batch(self.BATCH_SIZE)
         dataset = dataset.prefetch(self.AUTO)
