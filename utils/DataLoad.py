@@ -18,7 +18,7 @@ class DataLoad(tf.data.TFRecordDataset):
         assert image_size in (192,224,331,512)
         self.IMAGE_SIZE = [image_size, image_size]
         
-        self.GCS_PATH = KaggleDatasets().get_gcs_path('tpu-getting-started') + f'/tfrecords-jpeg-{image_size}x{image_size}'
+        self.GCS_PATH = f'/kaggle/input/tpu-getting-started/tfrecords-jpeg-{image_size}x{image_size}'
         self.TRAINING_FILENAMES = tf.io.gfile.glob(self.GCS_PATH + '/train/*.tfrec')
         self.VALIDATION_FILENAMES = tf.io.gfile.glob(self.GCS_PATH + '/val/*.tfrec')
         self.TEST_FILENAMES = tf.io.gfile.glob(self.GCS_PATH + '/test/*.tfrec')
