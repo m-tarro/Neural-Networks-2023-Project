@@ -1,17 +1,14 @@
 import re
 import numpy as np
 import tensorflow as tf
-from tensorflow_models.vision import augment
-
-from kaggle_datasets import KaggleDatasets
 
 # Data pipelines and exploration functions based on notebook: https://www.kaggle.com/code/achinih/flower-classification-cnn-models
 
 class DataLoad(tf.data.TFRecordDataset):
     
-    AUTO = tf.data.experimental.AUTOTUNE
-    
     def __init__(self, image_size=512, batch_size=16):
+        
+        self.AUTO = tf.data.experimental.AUTOTUNE
         
         self.BATCH_SIZE = batch_size
         
@@ -99,15 +96,6 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
-    def CutMixUp(self, batch_inputs, **kwargs):
-        bs_images = tf.cast(batch_inputs[0], dtype=tf.float32)
-        bs_labels = tf.cast(batch_inputs[1], dtype=tf.int32)
-
-        cutmixup = augment.MixupAndCutmix(**kwargs)
-        cutmix_images, cutmix_labels = cutmixup.distort(images=bs_images, labels=bs_labels)
-
-        return [cutmix_images, cutmix_labels]
-    
     def get_training_dataset(self, data_augment=False, cutmixup=False, ordered=False, **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
@@ -118,7 +106,7 @@ class DataLoad(tf.data.TFRecordDataset):
             dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
         if cutmixup:
-            dataset.map(lambda x, y: self.CutMixUp([x, y], **kwargs), num_parallel_calls=self.AUTO)
+            dataset = dataset.map(lambda x, y: data_augment([x, y]), num_parallel_calls=self.AUTO)
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
