@@ -96,11 +96,11 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
-    def get_training_dataset(self, element_augment=False, batch_augment=False, ordered=False, **kwargs):
+    def get_training_dataset(self, image_augment=False, batch_augment=False, ordered=False, **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
-        if element_augment:
-            dataset = dataset.map(element_augment, num_parallel_calls=self.AUTO)
+        if image_augment:
+            dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
         if not ordered:
             dataset = dataset.shuffle(2048)
