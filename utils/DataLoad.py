@@ -96,17 +96,17 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
-    def get_training_dataset(self, data_augment=False, cutmixup=False, ordered=False, **kwargs):
+    def get_training_dataset(self, element_augment=False, batch_augment=False, ordered=False, **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
-        if data_augment and not cutmixup:
-            dataset = dataset.map(data_augment, num_parallel_calls=self.AUTO)
+        if element_augment:
+            dataset = dataset.map(element_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
         if not ordered:
             dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
-        if cutmixup:
-            dataset = dataset.map(lambda x, y: data_augment([x, y]), num_parallel_calls=self.AUTO)
+        if batch_augment:
+            dataset = dataset.map(lambda x, y: batch_augment([x, y]), num_parallel_calls=self.AUTO)
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
