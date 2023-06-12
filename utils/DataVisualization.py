@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import math
+import numpy as np
+import tf
 
 CLASSES =  ['pink primrose',        'hard-leaved pocket orchid', 'canterbury bells', 'sweet pea',      'wild geranium',         # 00 - 04
             'tiger lily',           'moon orchid',               'bird of paradise', 'monkshood',      'globe thistle',         # 05 - 09
@@ -67,7 +69,7 @@ def display_one_flower(image, title, subplot, red=False, titlesize=16):
                   pad=int(titlesize/1.5))
     return (subplot[0], subplot[1], subplot[2]+1)
     
-def display_batch_of_images(databatch, predictions=None):
+def display_batch_of_images(databatch, predictions=None, onehot=False):
     """This will work with:
     display_batch_of_images(images)
     display_batch_of_images(images, predictions)
@@ -95,7 +97,12 @@ def display_batch_of_images(databatch, predictions=None):
     
     # display
     for i, (image, label) in enumerate(zip(images[:rows*cols], labels[:rows*cols])):
-        title = '' if label is None else CLASSES[label]
+        try:
+            title = '' if label is None else CLASSES[label]
+        except TypeError:
+            first_idx, second_idx = tf.math.top_k(label[0],k=2).indices.numpy()
+            first_prob, second_prob = tf.math.top_k(label[0],k=2).values.numpy()
+            title = f'{np.round(first_prob*100,1)}% {CLASSES[first_idx]}, {np.round(second_prob*100,1)}% {CLASSES[second_idx]}'
         correct = True
         if predictions is not None:
             title, correct = title_from_label_and_target(predictions[i], label)
