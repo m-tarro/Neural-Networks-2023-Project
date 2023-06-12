@@ -96,23 +96,31 @@ class DataLoad(tf.data.TFRecordDataset):
         # returns a dataset of (image, label) pairs if labeled=True or (image, id) pairs if labeled=False
         return dataset
     
+    def onehot_classes(self, image, label):
+        class_no = len(self.CLASSES)
+        return image, tf.one_hot(label, class_no)
+    
     def get_training_dataset(self, image_augment=False, batch_augment=False, ordered=False, **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
         if image_augment:
             dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
+        if batch_augment:
+            dataset = dataset.batch(self.BATCH_SIZE)
+            dataset = dataset.map(lambda x, y: batch_augment([x, y]), num_parallel_calls=self.AUTO)
+            dataset = dataset.unbatch()
         if not ordered:
             dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
-        if batch_augment:
-            dataset = dataset.map(lambda x, y: batch_augment([x, y]), num_parallel_calls=self.AUTO)
         dataset = dataset.prefetch(self.AUTO) # get next batch while training
         return dataset
     
-    def get_validation_dataset(self, ordered=False):
+    def get_validation_dataset(self, ordered=False, onehot=False):
         dataset = self.load_dataset(self.VALIDATION_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.batch(self.BATCH_SIZE)
+        if onehot: 
+            dataset = dataset.map(self.onehot_classes, num_parallel_calls=self.AUTO)
         dataset = dataset.cache()
         dataset = dataset.prefetch(self.AUTO)
         return dataset
