@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import math
 import numpy as np
-import tf
+import tensorflow as tf
 
 CLASSES =  ['pink primrose',        'hard-leaved pocket orchid', 'canterbury bells', 'sweet pea',      'wild geranium',         # 00 - 04
             'tiger lily',           'moon orchid',               'bird of paradise', 'monkshood',      'globe thistle',         # 05 - 09
