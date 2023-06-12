@@ -69,7 +69,7 @@ def display_one_flower(image, title, subplot, red=False, titlesize=16):
                   pad=int(titlesize/1.5))
     return (subplot[0], subplot[1], subplot[2]+1)
     
-def display_batch_of_images(databatch, predictions=None, onehot=False):
+def display_batch_of_images(databatch, predictions=None):
     """This will work with:
     display_batch_of_images(images)
     display_batch_of_images(images, predictions)
@@ -85,6 +85,9 @@ def display_batch_of_images(databatch, predictions=None, onehot=False):
     # or square-ish rectangle
     rows = int(math.sqrt(len(images)))
     cols = len(images)//rows
+    
+    # if labels are one-hotted, then title will work slightly differently
+    onehot = True if len(labels.shape)>1 else False
         
     # size and spacing
     FIGSIZE = 13.0
@@ -97,16 +100,16 @@ def display_batch_of_images(databatch, predictions=None, onehot=False):
     
     # display
     for i, (image, label) in enumerate(zip(images[:rows*cols], labels[:rows*cols])):
-        try:
+        if not onehot:
             title = '' if label is None else CLASSES[label]
-        except TypeError:
-            first_idx, second_idx = tf.math.top_k(label[0],k=2).indices.numpy()
-            first_prob, second_prob = tf.math.top_k(label[0],k=2).values.numpy()
-            title = f'{np.round(first_prob*100,1)}% {CLASSES[first_idx]}, {np.round(second_prob*100,1)}% {CLASSES[second_idx]}'
+        else:
+            first_idx, second_idx = tf.math.top_k(label,k=2).indices.numpy()
+            first_prob, second_prob = tf.math.top_k(label,k=2).values.numpy()
+            title = f'{np.round(first_prob*100,1)}% {CLASSES[first_idx]}\n{np.round(second_prob*100,1)}% {CLASSES[second_idx]}'
         correct = True
         if predictions is not None:
             title, correct = title_from_label_and_target(predictions[i], label)
-        dynamic_titlesize = FIGSIZE*SPACING/max(rows,cols)*40+3 # magic formula tested to work from 1x1 to 10x10 images
+        dynamic_titlesize = (FIGSIZE*SPACING/max(rows,cols)*40+3)/(1+int(onehot)) # magic formula tested to work from 1x1 to 10x10 images
         subplot = display_one_flower(image, title, subplot, not correct, titlesize=dynamic_titlesize)
     
     #layout
