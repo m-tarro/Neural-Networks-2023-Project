@@ -110,6 +110,8 @@ class DataLoad(tf.data.TFRecordDataset):
             dataset = dataset.batch(self.BATCH_SIZE)
             dataset = dataset.map(lambda x, y: batch_augment([x, y], onehot=onehot), num_parallel_calls=self.AUTO)
             dataset = dataset.unbatch()
+        elif onehot:
+            dataset = dataset.map(self.onehot_classes, num_parallel_calls=self.AUTO)
         if not ordered:
             dataset = dataset.shuffle(2048)
         dataset = dataset.batch(self.BATCH_SIZE)
