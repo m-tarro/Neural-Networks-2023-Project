@@ -100,9 +100,13 @@ class DataLoad(tf.data.TFRecordDataset):
         class_no = len(self.CLASSES)
         return image, tf.one_hot(label, class_no)
     
-    def get_training_dataset(self, image_augment=False, batch_augment=False, ordered=False, onehot=True, **kwargs):
+    def get_training_dataset(self, image_augment=False, batch_augment=False, ordered=False, onehot=True, split='train', **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
+        if split == 'train:
+            dataset = dataset.take(int(self.NUM_TRAINING_IMAGES * 0.8))
+        elif split == 'test':
+            dataset = dataset.skip(int(self.NUM_TRAINING_IMAGES * 0.8))
         if image_augment:
             dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         dataset = dataset.repeat() # the training dataset must repeat for several epochs
