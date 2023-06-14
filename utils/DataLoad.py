@@ -109,8 +109,6 @@ class DataLoad(tf.data.TFRecordDataset):
             dataset = dataset.skip(int(self.NUM_TRAINING_IMAGES * 0.8))
         else:
             dataset = dataset.repeat(10)
-        if image_augment:
-            dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         if batch_augment:
             dataset = dataset.batch(self.BATCH_SIZE)
             # dataset = dataset.map(lambda x, y: batch_augment([x, y], onehot=onehot), num_parallel_calls=self.AUTO)
@@ -118,6 +116,8 @@ class DataLoad(tf.data.TFRecordDataset):
             dataset = dataset.unbatch()
         elif onehot:
             dataset = dataset.map(self.onehot_classes, num_parallel_calls=self.AUTO)
+        if image_augment:
+            dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         if split != 'test':
             dataset = dataset.repeat() # the training dataset must repeat for several epochs
         if not ordered:
