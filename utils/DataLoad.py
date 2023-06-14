@@ -103,7 +103,7 @@ class DataLoad(tf.data.TFRecordDataset):
     def get_training_dataset(self, image_augment=False, batch_augment=False, ordered=False, onehot=True, split='train', **kwargs):
         dataset = self.load_dataset(self.TRAINING_FILENAMES, labeled=True, ordered=ordered)
         dataset = dataset.repeat(10)
-        if split == 'train:
+        if split == 'train':
             dataset = dataset.take(int(self.NUM_TRAINING_IMAGES * 0.8))
         elif split == 'test':
             dataset = dataset.skip(int(self.NUM_TRAINING_IMAGES * 0.8))
