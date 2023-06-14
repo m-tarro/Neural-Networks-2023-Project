@@ -109,8 +109,8 @@ class DataLoad(tf.data.TFRecordDataset):
         elif split == 'test':
             dataset = dataset.skip(int(self.NUM_TRAINING_IMAGES * 0.8))
         else:
-            dataset = dataset.shuffle(2048)
             dataset = dataset.repeat()
+            dataset = dataset.shuffle(2048)
         if image_augment:
             dataset = dataset.map(image_augment, num_parallel_calls=self.AUTO)
         if batch_augment:
