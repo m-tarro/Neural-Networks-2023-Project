@@ -115,7 +115,8 @@ class DataLoad(tf.data.TFRecordDataset):
             dataset = dataset.repeat() # the training dataset must repeat for several epochs
         if batch_augment:
             dataset = dataset.batch(self.BATCH_SIZE)
-            dataset = dataset.map(lambda x, y: batch_augment([x, y], onehot=onehot), num_parallel_calls=self.AUTO)
+            # dataset = dataset.map(lambda x, y: batch_augment([x, y], onehot=onehot), num_parallel_calls=self.AUTO)
+            dataset = dataset.map(batch_augment, num_parallel_calls=self.AUTO)
             dataset = dataset.unbatch()
         elif onehot:
             dataset = dataset.map(self.onehot_classes, num_parallel_calls=self.AUTO)
